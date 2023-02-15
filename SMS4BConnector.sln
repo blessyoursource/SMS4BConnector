@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMS4BConnector", "SMS4BConnector\SMS4BConnector.csproj", "{22E199CB-79EF-4A42-BBC1-5AD076543774}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{22E199CB-79EF-4A42-BBC1-5AD076543774}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22E199CB-79EF-4A42-BBC1-5AD076543774}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22E199CB-79EF-4A42-BBC1-5AD076543774}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22E199CB-79EF-4A42-BBC1-5AD076543774}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D1747FF4-8050-4C69-894D-8A23F41C8CFD}
+	EndGlobalSection
+EndGlobal
