@@ -10,16 +10,65 @@ namespace SMS4BConnector
     {
         static async Task Main(string[] args)
         {
-            StartSession startSession = new StartSession("test","test",1);
-            //Console.WriteLine(startSession.getResponse());
-            Console.WriteLine(startSession.getLogin());
-            test();
+            // Client Creation
+            SoapClient soapClient = new SoapClient(WSSMSoapClient.EndpointConfiguration.WSSMSoap12);
+            var client = soapClient.createClient();
+
+            Console.WriteLine("Current EndpointConfiguration: " + soapClient.getConf());
+            soapClient.checkStatus(client);
+
+            startSession(client);
+            paramSMS(client);
+            closeSession(client);
+            paramSMS(client);
+
+            // Client Destroy
+            Console.WriteLine("\nClosing client");
+            client.Abort();
+            soapClient.checkStatus(client);
+        }
+
+        public static void startSession(WSSMSoap client)
+        {
+            codeHandler codeHandler = new codeHandler();
+            // Client Start Session
+            Console.WriteLine("\nStarting Session, Enter Login, Password, Gmt: ");
+            StartSession startSession = new StartSession(client, Console.ReadLine(), Console.ReadLine(), short.Parse(Console.ReadLine()));
+            writeProcessing();
+            var result = startSession.createSession();
+            Console.WriteLine(result);
+            codeHandler.checkCode(result);
+        }
+        public static void closeSession(WSSMSoap client)
+        {
+            codeHandler codeHandler = new codeHandler();
+            // Client Start Session
+            Console.WriteLine("\nClosing Session, Enter Session Id: ");
+            CloseSession closeSession = new CloseSession(client, long.Parse(Console.ReadLine()));
+            writeProcessing();
+            var result = closeSession.closeSession();
+            Console.WriteLine(result);
+            codeHandler.checkCode(result);
+        }
+        public static void paramSMS(WSSMSoap client)
+        {
+            codeHandler codeHandler = new codeHandler();
+            // Client Ping Session (ParamSMS)
+            Console.WriteLine("\nPing Session, Enter Session Id:");
+            ParamSMS paramSMS = new ParamSMS(client, long.Parse(Console.ReadLine()));
+            writeProcessing();
+            string pingResult = paramSMS.pingSession();
+            Console.WriteLine(pingResult);
+        }
+
+        public static void writeProcessing()
+        {
+            Console.WriteLine("Processing...");
         }
 
         public static async void test()
         {
             var client = new WSSMSoapClient(WSSMSoapClient.EndpointConfiguration.WSSMSoap12);
-            Console.WriteLine("Credentials: " + client.ClientCredentials.ClientCertificate.ToString());
 
             Console.WriteLine("Login: ");
             string login = Console.ReadLine();
@@ -58,6 +107,5 @@ namespace SMS4BConnector
             var ping = await client.GetInfoAsync();
             Console.WriteLine("Ping: " + ping);
         }
-
     }
 }

@@ -1,26 +1,29 @@
-﻿using SMS4BSoap;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SMS4BSoap;
 
 namespace SMS4BConnector.Methods
 {
     public class StartSession
     {
+        private WSSMSoap client;
         private string login;
         private string password;
         private short gmt;
-        public StartSession(string login, string password, short gmt)
+        public StartSession(WSSMSoap client, string login, string password, short gmt)
         {
+            this.client = client;
             this.login = login;
             this.password = password;
             this.gmt = gmt;
-        }   
-        public string getResponse(WSSMSoapClient client)
+        }
+
+        public long createSession()
         {
-            
-            var response = client.StartSessionAsync(login, password, gmt);
-            return response.ToString();
+            var temp = client.StartSessionAsync(login, password, gmt);
+            var result = temp.Result;
+            return result;
         }
 
         public string getLogin()
@@ -49,6 +52,7 @@ namespace SMS4BConnector.Methods
             this.gmt = gmt;
         }
 
-        
+
     }
+
 }
