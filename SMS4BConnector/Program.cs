@@ -17,17 +17,31 @@ namespace SMS4BConnector
             Console.WriteLine("Current EndpointConfiguration: " + soapClient.getConf());
             soapClient.checkStatus(client);
 
-            /*startSession(client);
+            startSession(client);
             paramSMS(client);
             closeSession(client);
             paramSMS(client);
-            sendSMS(client);*/
-            sendGroupSMS(client);
+            //sendSMS(client);
+            //sendGroupSMS(client);
 
             // Client Destroy
+            /*Console.WriteLine("\nClosing client");
+            client.Abort();
+            soapClient.checkStatus(client);*/
+
+            var client2 = soapClient.createClient();
+            Console.WriteLine("Current EndpointConfiguration: " + soapClient.getConf());
+            soapClient.checkStatus(client2);
+            startSession(client2);
+            paramSMS(client2);
+            closeSession(client2);
+            paramSMS(client2);
+
             Console.WriteLine("\nClosing client");
             client.Abort();
+            client2.Abort();
             soapClient.checkStatus(client);
+            soapClient.checkStatus(client2);
         }
 
         public static void startSession(WSSMSoap client)
@@ -75,7 +89,16 @@ namespace SMS4BConnector
 
         public static async void sendGroupSMS(WSSMSoap client)
         {
-            
+            GroupSMSList[] groupSMSList = new GroupSMSList();
+            GroupSMSResult groupSMSResult = new GroupSMSResult();
+            GroupSMSResponse groupSMSResponse = new GroupSMSResponse();
+
+            GroupSMSRequest groupSMSRequest = new GroupSMSRequest(long.Parse(Console.ReadLine()), long.Parse(Console.ReadLine()), 
+                Console.ReadLine(), 0, Console.ReadLine(), "", "", "", groupSMSList);
+
+            var response = groupSMSResponse.GroupSMSResult.ToString();
+            var result = groupSMSResult.Result + groupSMSResult.Group + groupSMSResult.List.ToString();
+            Console.WriteLine(result + response);
         }
 
         public static void writeProcessing()
